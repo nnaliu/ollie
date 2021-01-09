@@ -1,4 +1,11 @@
-# Getting Started with Create React App
+# Learn with Ollie
+Ollie is a chatbot that helps you learn languages! Ollie will engage in simple conversations with you to practice scenarios from daily life, like introductions, planning trips, and ordering food at the restaurant.
+
+Ollie currently speaks in English and can correct users who type in Spanish. Native and target language selection coming soon.
+
+Ollie learned to speak with GPT-3, so excuse any responses that may seem a bit strange.
+
+<!-- # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -68,3 +75,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ -->

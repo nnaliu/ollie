@@ -1,38 +1,336 @@
+html {
+  --white: #FFFFFF;
+  --yellow: #F2B415;
+  --black: #292F3F;
+  --dark-primary: #272A35;
+  --dark-secondary: #373E4E;
+  --dark-text: rgba(0, 0, 0, 0.25);
+  --light-text: rgba(255, 255, 255, 0.6);
+  --gray1: #F6F6F6;
+  --gray2: #E8E8E8;
+  --gray3: #BDBDBD;
+  --gray4: #666666;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/************************** GENERIC **************************/
+
+body {
+  background-color: var(--black);
+  font-family: Poppins-Regular, sans-serif;
+}
+
+p {
+  max-width: 350px;
+  line-height: 16px;
+  padding: 10px 16px;
+  border-radius: 20px;
+  position: relative;
+  color: white;
+  text-align: left;
+}
+
+ul, li {
+  text-align: left;
+  list-style: none;
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+  color: var(--yellow);
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+img {
+}
+
+header {
+  display: flex;
+  flex-flow: row nowrap;
+  position: fixed;
+  justify-content: space-between;
+  background-color: var(--black);
+  z-index: 10;
+}
+
+header .header-child {
+  flex: 1;
+  flex-basis: auto;
+  justify-content: space-between;
+}
+
+header button, header a {
+  all: unset;
+  /* For IE */
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  outline: inherit;
+  /* End for IE */
+
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--yellow);
+  background-color: none;
+}
+
+.yellow-button {
+  background-color: var(--yellow);
+  border-radius: 20px;
+  margin: 15px;
+  padding: 5px 20px;
+  color: var(--dark-primary);
+}
+
+.body-container {
+/*  max-height: 500px;*/
+  margin: auto;
+  margin-top: 10vh;
+  position: absolute;
+  top: 0px; left: 25px; bottom: 0; right: 25px;
+  overflow: scroll;
+}
+
+.error {
+  color: #eb5960;
+  font-size: 12px;
+  margin: 0 auto;
+}
+
+/************************** App **************************/
+
 .App {
+  color: var(--white);
+/*  max-width: 600px;*/
+  margin: 0 auto;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.App header {
+  height: 10vh;
+  min-height: 50px;
+/*  position: fixed;*/
+  width: 100%;
+  max-width: 728px;
+  top: 0;
+/*  display: flex;*/
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: calc(8px + 1vmin);
+}
+
+.App .input-form {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.App .user-input {
+  width: 300px;
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0 auto;
+}
+
+.App .user-input input {
+  font-family: Poppins-Medium;
+  font-size: 16px;
+  color: white;
+  line-height: 1.2;
+  border: none;
+  border-bottom: 1px solid var(--dark-secondary);
+  height: 40px;
+  background: transparent;
+  padding: 0 7px 0 43px;
+}
+
+.App .user-input .icon {
+/*  float: left;*/
+  margin-left: 14px;
+  margin-top: 14px;
+  position: absolute;
+  z-index: 2;
+}
+
+.App .forgotpassword {
+  font-size: 0.7rem;
+  color: var(--light-text);
+  align-self: flex-end;
+/*  width: 100%;*/
+  /*right: -40px;*/
+/*  margin: 10px 0;*/
+/*  text-align: right;*/
+}
+
+.App .google {
+/*  position: relative;*/
+/*  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;*/
+/*  flex-wrap: wrap;*/
+  margin: 10px;
+  padding: 5px 20px;
+  border-radius: 20px;
+  color: var(--dark-primary);
+  background: white;
+}
+
+/************************** SelectionScreen **************************/
+
+.scenario-list {
+  display: flex;
+  flex-flow: row wrap;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.scenario {
+  width: 45%;
+  /*transition: all 0.1s ease-out;*/
+  /*border: 1px solid var(--dark-secondary);*/
+  padding: 12px 6px;
+  overflow: visible;
+}
+
+.scenario .img-wrapper {
+  width: 100%;
+}
+
+.scenario img {
+  width: 100%;
+  height: 80%;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+
+/************************** ChatRoom **************************/
+
+.ChatRoom form {
+  height: 8vh;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  display: flex;
+}
+
+.ChatRoom .body-container {
+  margin-bottom: 9vh;
+}
+
+.ChatRoom button {
+  width: 40px;
+  height: 40px;
+  background-color: var(--yellow);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 0;
+  margin-right: 10px;
+}
+
+.ChatRoom .icon {
+  color: white;
+  height: 25px;
+  width: 25px;
+}
+
+.ChatRoom .SaveButton {
+  position: fixed;
+  bottom: 8vh;
+  margin-bottom: 10px;
+  background-color: var(--white);
+}
+
+.ChatRoom .SaveButton .icon {
+  color: var(--dark-secondary);
+}
+
+.ChatRoom input {
+  line-height: 1.5;
+  width: 100%;
+  font-size: 1rem;
+  background: var(--dark-primary);
+  color: var(--light-text);
+  outline: none;
+  border: none;
+  padding: 0 20px;
+  margin-right: 60px;
+  overflow: visible;
+}
+
+.message {
+  display: flex;
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+.sent {
+  flex-direction: row-reverse;
+}
+
+.sent p {
+  align-self: flex-end;
+  background: var(--dark-primary);
+  color: white;
+}
+.received p {
+  background: var(--dark-secondary);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/************************** PageNotFound **************************/
+
+.PageNotFound {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+.PageNotFound img {
+  margin: auto;
+  height: 300px;
+  width: 300px;
+  border-radius: 50%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/*main {
+  padding: 10px;
+  height: 80vh;
+  margin: 10vh 0 10vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 }
+
+main::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+main::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+
+main::-webkit-scrollbar-thumb {
+  background: #6649b8;
+}*/
