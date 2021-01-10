@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import { useAuth, getUserDoc } from './use-auth';
 import { v4 as uuidv4 } from 'uuid';
 import * as diff from 'diff';
 import './App.css';
@@ -13,18 +14,20 @@ const grammarCheck = functions.httpsCallable('grammarCheckGateway');
 const translate = functions.httpsCallable('translateGateway');
 
 function ChatRoom() {
-
+  const auth = useAuth();
   const dummy = useRef(); // used for scrolling
   const data = useLocation();
   const uuid = uuidv4();
 
   // Each conversation item has the following fields: text, createdAt, humanOrBot, sessionId
   const [conversation, setConversation] = useState([]);
-  const messagesRef = firestore.collection('messages'); // For storing messages in Firebase
   const [formValue, setFormValue] = useState('');
+  const [language, setLanguage] = useState('Spanish');
+  const messagesRef = firestore.collection('messages'); // For storing messages in Firebase
 
   // Ollie sends first message
   useEffect(() => {
+    getUser();
     callOllie({prompt: data.state.prompt, conversation: conversation});
   }, []);
 
@@ -34,6 +37,11 @@ function ChatRoom() {
       callOllie({prompt: data.state.prompt, conversation: conversation});
     }
   }, [conversation]);
+
+  const getUser = async () => {
+    const user = getUserDoc(auth.user.uid);
+    setLanguage(user.language);
+  }
 
   const saveChat = () => {
     console.log("Save Chat Called");
@@ -63,7 +71,6 @@ function ChatRoom() {
 
   const sendMessage = async (e) => {
     e.preventDefault();
-    console.log(formValue);
     setFormValue('');
     var translation = formValue;
     var diff = [];
@@ -82,7 +89,7 @@ function ChatRoom() {
   }
 
   const findForeignWords = async (text) => {
-    const translation = await translate({ text: text, language: 'Spanish' });
+    const translation = await translate({ text: text, language: language });
     var d = diff.diffWords(text, translation.data);
     d = d.map(part => {
       return {value: part.value, change: part.added ? 1 : part.removed ? -1 : 0};
@@ -150,7 +157,6 @@ function ChatRoom() {
   }
 
   const callOllie = (userInput) => {
-    console.log("CALL OLLIE");
     gpt3Chat({ prompt: userInput.prompt, conversation: transformConvo(userInput.conversation) })
       .then((result) => {
         const response = result.data.text;

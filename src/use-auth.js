@@ -106,6 +106,7 @@ export const generateUserDoc = async (user, additionalData) => {
 			await userRef.set({
 				displayName,
 				email,
+        language: 'Spanish',
 				...additionalData
 			});
 		} catch (err) {
@@ -115,7 +116,18 @@ export const generateUserDoc = async (user, additionalData) => {
 	return getUserDoc(user.uid);
 }
 
-const getUserDoc = async (uid) => {
+export const updateUserDoc = async (uid, data) => {
+  if (!uid) return;
+  try {
+    const res = await firestore.doc(`users/${uid}`).update(data);
+    return res;
+  } catch (err) {
+    console.error('Error updating user', err);
+    return err;
+  }
+}
+
+export const getUserDoc = async (uid) => {
 	if (!uid) return null;
 	try {
 		const userDoc = await firestore.doc(`users/${uid}`).get();
@@ -126,4 +138,5 @@ const getUserDoc = async (uid) => {
 	} catch (err) {
 		console.error('Error fetching user', err);
 	}
+  return null;
 }

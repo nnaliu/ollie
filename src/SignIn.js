@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FaUserAlt, FaLock, FaAt, FaTimes } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { useAuth } from './use-auth';
+import { useAuth, generateUserDoc, getUserDoc } from './use-auth';
 import './App.css';
 
 function SignIn() {
@@ -16,7 +16,7 @@ function SignIn() {
     event.preventDefault();
     try {
       await auth.signin(email, password);
-      history.push('/home');
+      history.push('/');
     } catch (err) {
       setError('Error signing in with email and password');
       console.error('Error signing in with email and password');
@@ -25,8 +25,12 @@ function SignIn() {
 
   const signInWithGoogleHandler = async () => {
     try {
-      await auth.signInWithGoogle();
-      history.push('/home');
+      const user = await auth.signInWithGoogle();
+      const has_user = await getUserDoc(user.user.id);
+      if (user.user && !has_user) {
+        generateUserDoc(user.user, {displayName: user.user.displayName});
+      }
+      history.push('/');
     } catch (err) {
       setError('Error signing in with Google');
       console.error('Error signing in with Google');

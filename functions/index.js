@@ -23,7 +23,7 @@ exports.gpt3Gateway = functions.https.onCall((data, context) => {
 		var safety = 2;
 		do {
 			response = await openai.complete({
-				engine: 'babbage', // Temporarily replaced davinci with instruct-davinci-beta
+				engine: 'curie', // Temporarily replaced davinci with instruct-davinci-beta
 				prompt: prompt + '\n' + conversation.join('\n'),
 				maxTokens: 50,
 				temperature: 0.7,
@@ -46,7 +46,7 @@ exports.gpt3Gateway = functions.https.onCall((data, context) => {
 		} while (safety > 0);
 
 		// Remove surrounding quotes and whitespace
-		return { text: result.replace(/^["'](.+(?=["']$))["']$/,'$1').replace(/^\s+|\s+$/gm,'') };
+		return { text: result.replace(/^\s+|\s+$/gm,'').replace(/^["'](.+(?=["']$))["']$/,'$1') };
 	})();
 });
 
@@ -71,7 +71,12 @@ exports.grammarCheckGateway = functions.https.onCall((data, context) => {
 
 exports.translateGateway = functions.https.onCall((data, context) => {
 	const language = data.language;
-	const prompt = 'Translate from ' + language + ' to English.\n###\nInput: My tía is in el baño.\nOutput: My aunt is in the bathroom.\n###\nInput: Querio eat the tarta.\nOutput: I want to eat the pie.\n###\n'
+	const helper_text = {
+		Spanish: '\n###\nInput: My tía is in el baño.\nOutput: My aunt is in the bathroom.\n###\nInput: Querio eat the tarta.\nOutput: I want to eat the pie.\n###\n',
+		French: '\n###\nInput: I\'d like to book une chambre double for two nuits.\nOutput: I\'d like to book a double room for two nights.\n###\nInput: Excuse me, where is la gare?\nOutput: Excuse me, where is the train station?\n###\n';
+		German: '\n###\nInput: Entschuldigen Sie, I have eine Frage.\nOutput: Excuse me, I have a question.\n###\nInput: How much kostet dieses Gericht?\nOutput: How much does this dish cost?\n###\n'
+	}
+	const prompt = 'Translate from ' + language + ' to English.' + helper_text[language];
 	const text = data.text;
 
 	return (async () => {

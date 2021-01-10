@@ -31,7 +31,7 @@ p {
   border-radius: 20px;
   position: relative;
   color: white;
-  text-align: left;
+  /*text-align: left;*/
 }
 
 ul, li {
@@ -127,7 +127,7 @@ header button, header a {
   min-height: 50px;
 /*  position: fixed;*/
   width: 100%;
-  max-width: 728px;
+  /*max-width: 728px;*/
   top: 0;
 /*  display: flex;*/
   flex-direction: row;
@@ -258,13 +258,16 @@ header button, header a {
 
 .ChatRoom .SaveButton {
   position: fixed;
-  bottom: 8vh;
-  margin-bottom: 10px;
-  background-color: var(--white);
+  top: 15px;
+  right: 5%;
+  /*font-size: 0.9rem;*/
+  cursor: pointer;
+  background-color: var(--dark-primary);
+  z-index: 11;
 }
 
 .ChatRoom .SaveButton .icon {
-  color: var(--dark-secondary);
+  color: var(--white);
 }
 
 .ChatRoom input {
@@ -294,10 +297,12 @@ header button, header a {
   align-self: flex-end;
   background: var(--dark-primary);
   color: white;
+  text-align: left;
 }
 .received p {
   background: var(--dark-secondary);
   color: white;
+  text-align: left;
 }
 
 /************************** PageNotFound **************************/
@@ -312,6 +317,18 @@ header button, header a {
   height: 300px;
   width: 300px;
   border-radius: 50%;
+}
+
+/************************** ProfilePage **************************/
+
+.ProfilePage {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.ProfilePage .success {
+  color: lightgreen;
 }
 
 /*main {
