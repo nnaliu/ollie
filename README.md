@@ -1,78 +1,32 @@
 # Learn with Ollie
 Ollie is a chatbot that helps you learn languages! Ollie will engage in simple conversations with you to practice scenarios from daily life, like introductions, planning trips, and ordering food at the restaurant.
 
-Ollie currently speaks in English and can correct users who type in Spanish. Native and target language selection coming soon.
+Ollie currently speaks in English and can correct users who type in Spanish, French, and German. Ollie will correct your grammar and convert any words you type in your native language to English. The next time you're racking your brain for what the English word or phrase is, you can just type in your native language rather than pull up a translation app.
+
+<img src="src/assets/readme3.png" alt="Conversation Topics" width="300px">
+<p float="left">
+ <img src="src/assets/readme1.png" alt="Example Conversation 1" height="500px">
+ <img src="src/assets/readme2.png" alt="Example Conversation 2" height="500px">
+</p>
 
 Ollie learned to speak with GPT-3, so excuse any responses that may seem a bit strange.
 
-<!-- # Getting Started with Create React App
+## Descripción en español
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ollie es un chatbot que te ayuda a aprender idiomas. Ollie entablará conversaciones sencillas contigo para practicar escenarios de la vida diaria, como presentaciones, planificar viajes y pedir comida en el restaurante.
 
-## Available Scripts
+Ollie habla actualmente en inglés y puede corregir a los usuarios que escriben en español, francés y alemán. Ollie corregirá tu gramática y convertirá cualquier palabra que escribas en tu idioma nativo al inglés. La próxima vez que se dedique a averiguar cuál es la palabra o frase en inglés, puede escribir en su idioma nativo en lugar de abrir una aplicación de traducción.
 
-In the project directory, you can run:
+## Description française
 
-### `npm start`
+Ollie est un chatbot qui vous aide à apprendre les langues! Ollie s'engagera dans des conversations simples avec vous pour pratiquer des scénarios de la vie quotidienne, comme les présentations, la planification de voyages et la commande de nourriture au restaurant.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Ollie parle actuellement anglais et peut corriger les utilisateurs qui tapent en espagnol, français et allemand. Ollie corrigera votre grammaire et convertira tous les mots que vous saisissez dans votre langue maternelle en anglais. La prochaine fois que vous vous demanderez ce qu'est le mot ou la phrase anglais, vous pouvez simplement taper dans votre langue maternelle plutôt que de lancer une application de traduction.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Deutsche Beschreibung
 
-### `npm test`
+Ollie ist ein Chatbot, mit dem Sie Sprachen lernen können! Ollie führt einfache Gespräche mit Ihnen, um Szenarien aus dem täglichen Leben zu üben, z. B. Einführungen, Ausflüge planen und Essen im Restaurant bestellen.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Ollie spricht derzeit Englisch und kann Benutzer korrigieren, die Spanisch, Französisch und Deutsch eingeben. Ollie korrigiert Ihre Grammatik und konvertiert alle Wörter, die Sie in Ihrer Muttersprache eingeben, in Englisch. Wenn Sie sich das nächste Mal den Kopf zerbrechen, was das englische Wort oder die englische Phrase ist, können Sie einfach Ihre Muttersprache eingeben, anstatt eine Übersetzungs-App aufzurufen.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
- -->
+Illustrations designed by @catalyststuff on Freepik
