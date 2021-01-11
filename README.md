@@ -5,8 +5,8 @@ Ollie currently speaks in English and can correct users who type in Spanish, Fre
 
 <img src="src/assets/readme3.png" alt="Conversation Topics" width="300px">
 <p float="left">
- <img src="src/assets/readme1.png" alt="Example Conversation 1" height="500px">
- <img src="src/assets/readme2.png" alt="Example Conversation 2" height="500px">
+ <img src="src/assets/readme1.png" alt="Example Conversation 1" height="400px">
+ <img src="src/assets/readme2.png" alt="Example Conversation 2" height="400px">
 </p>
 
 Ollie learned to speak with GPT-3, so excuse any responses that may seem a bit strange.
