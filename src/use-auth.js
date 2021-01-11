@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
-import firebase, { firestore } from './firebase'
+import firebase, { firestore } from './firebase';
 import 'firebase/auth';
 
 const authContext = createContext();
@@ -41,7 +41,7 @@ function useProvideAuth() {
   };
 
   const signInWithGoogle = () => {
-  	return firebase.auth().signInWithPopup(provider);
+    return firebase.auth().signInWithPopup(provider);
   };
 
   const signout = () => {
@@ -114,7 +114,7 @@ export const generateUserDoc = async (user, additionalData) => {
 		}
 	}
 	return getUserDoc(user.uid);
-}
+};
 
 export const updateUserDoc = async (uid, data) => {
   if (!uid) return;
@@ -125,7 +125,7 @@ export const updateUserDoc = async (uid, data) => {
     console.error('Error updating user', err);
     return err;
   }
-}
+};
 
 export const getUserDoc = async (uid) => {
 	if (!uid) return null;
@@ -134,9 +134,9 @@ export const getUserDoc = async (uid) => {
 		return {
 			uid,
 			...userDoc.data()
-		}
+		};
 	} catch (err) {
 		console.error('Error fetching user', err);
 	}
   return null;
-}
+};

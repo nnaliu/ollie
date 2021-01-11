@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useAuth, generateUserDoc, getUserDoc } from './use-auth';
 import { FaUserAlt, FaLock, FaAt } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { useAuth, generateUserDoc, getUserDoc } from './use-auth';
 import './App.css';
 
 function SignUp() {
@@ -25,7 +25,7 @@ function SignUp() {
     setEmail('');
     setPassword('');
     setDisplayName('');
-  }
+  };
 
   const createUserWithGoogleHandler = async (event) => {
     event.preventDefault();
@@ -39,7 +39,7 @@ function SignUp() {
     } catch (err) {
       setError('' + err);
     }
-  }
+  };
 
   const onChangeHandler = (event) => {
     const {name, value} = event.currentTarget;
@@ -50,7 +50,7 @@ function SignUp() {
     } else if (name === 'displayName') {
       setDisplayName(value);
     }
-  }
+  };
 
   return (
     <div>
@@ -100,7 +100,7 @@ function SignUp() {
         <button className='google' onClick={(event) => createUserWithGoogleHandler(event)}><FcGoogle /> Sign in with Google</button>
       </div>
     </div>
-  )
+  );
 }
 
 export default SignUp;

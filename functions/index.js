@@ -10,7 +10,18 @@ const languagetool = require('languagetool-api');
 var languagetool_params = {
   language: 'en-US',
   text: '',
-  disabledRules: ['UPPERCASE_SENTENCE_START', 'EN_QUOTES', 'COMMA_PARENTHESIS_WHITESPACE', 'DATE_WEEKDAY_WITHOUT_YEAR']
+  disabledRules: [
+  	'UPPERCASE_SENTENCE_START',
+  	'EN_QUOTES',
+  	'COMMA_PARENTHESIS_WHITESPACE',
+  	'DATE_WEEKDAY_WITHOUT_YEAR',
+  	'PUNCTUATION_PARAGRAPH_END',
+  	'PUNCTUATION_PARAGRAPH_END2',
+  	'TOO_LONG_SENTENCE',
+  	'TOO_LONG_PARAGRAPH',
+  	'WHITESPACE_PARAGRAPH_BEGIN',
+  	'EMPTY_LINE'
+  ]
     // Rule list: https://community.languagetool.org/rule/list
 };
 
@@ -25,7 +36,7 @@ exports.gpt3Gateway = functions.https.onCall((data, context) => {
 			response = await openai.complete({
 				engine: 'curie', // Temporarily replaced davinci with instruct-davinci-beta
 				prompt: prompt + '\n' + conversation.join('\n'),
-				maxTokens: 50,
+				maxTokens: 32,
 				temperature: 0.7,
 				topP: 1,
 				presence_penalty: 0.3,
@@ -73,7 +84,7 @@ exports.translateGateway = functions.https.onCall((data, context) => {
 	const language = data.language;
 	const helper_text = {
 		Spanish: '\n###\nInput: My tía is in el baño.\nOutput: My aunt is in the bathroom.\n###\nInput: Querio eat the tarta.\nOutput: I want to eat the pie.\n###\n',
-		French: '\n###\nInput: I\'d like to book une chambre double for two nuits.\nOutput: I\'d like to book a double room for two nights.\n###\nInput: Excuse me, where is la gare?\nOutput: Excuse me, where is the train station?\n###\n';
+		French: '\n###\nInput: I\'d like to book une chambre double for two nuits.\nOutput: I\'d like to book a double room for two nights.\n###\nInput: Excuse me, where is la gare?\nOutput: Excuse me, where is the train station?\n###\n',
 		German: '\n###\nInput: Entschuldigen Sie, I have eine Frage.\nOutput: Excuse me, I have a question.\n###\nInput: How much kostet dieses Gericht?\nOutput: How much does this dish cost?\n###\n'
 	}
 	const prompt = 'Translate from ' + language + ' to English.' + helper_text[language];
@@ -105,6 +116,6 @@ exports.translateGateway = functions.https.onCall((data, context) => {
 				top_p: 0
 			})
 		} while (safety > 0);
-		return result.trim();
+		return result.trim().replace(/^["'](.+(?=["']$))["']$/,'$1');
 	})();
 });

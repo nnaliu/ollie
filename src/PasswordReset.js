@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { Route, Link, Switch, withRouter, useLocation, useHistory } from 'react-router-dom';
+import { useAuth } from './use-auth';
 import { FaAt } from 'react-icons/fa';
 import './App.css';
-
-import { useAuth } from './use-auth';
 
 function PasswordReset() {
   const auth = useAuth();
   const [email, setEmail] = useState('');
   const [emailHasBeenSent, setEmailHasBeenSent] = useState(false);
   const [error, setError] = useState(null);
-  const history = useHistory();
 
   const onChangeHandler = (event) => {
     const { name, value } = event.currentTarget;
@@ -25,11 +22,11 @@ function PasswordReset() {
       await auth.sendPasswordResetEmail(email)
         .then(() => {
           setEmailHasBeenSent(true);
-          setTimeout(() => {setEmailHasBeenSent(false)}, 3000);
+          setTimeout(() => {setEmailHasBeenSent(false);}, 3000);
         })
         .catch(() => {
           setError('Error signing in with Google');
-        })
+        });
     } catch (err) {
       console.error(error);
     }
@@ -42,7 +39,7 @@ function PasswordReset() {
         <form action='' className='input-form'>
           {emailHasBeenSent && (
             <div>
-              An email's waiting in your inbox!
+              <p>An email is waiting in your inbox!</p>
             </div>
           )}
           {error !== null && (
@@ -63,7 +60,7 @@ function PasswordReset() {
         </form>
       </div>
     </div>
-  )
+  );
 }
 
 export default PasswordReset;

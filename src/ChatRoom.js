@@ -1,19 +1,17 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import React, { forwardRef, useImperativeHandle, useRef, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import firebase, { firestore, functions } from './firebase';
 import { useAuth, getUserDoc } from './use-auth';
 import { v4 as uuidv4 } from 'uuid';
 import * as diff from 'diff';
 import './App.css';
-import { IoSend, IoCloudUpload } from "react-icons/io5";
-
-// import { analytics, auth, firestore, functions } from './firebase'
-import firebase, { analytics, firestore, functions } from './firebase'
+import { IoSend } from 'react-icons/io5';
 
 const gpt3Chat = functions.httpsCallable('gpt3Gateway');
 const grammarCheck = functions.httpsCallable('grammarCheckGateway');
 const translate = functions.httpsCallable('translateGateway');
 
-function ChatRoom() {
+function ChatRoom (props, ref) {
   const auth = useAuth();
   const dummy = useRef(); // used for scrolling
   const data = useLocation();
@@ -23,29 +21,35 @@ function ChatRoom() {
   const [conversation, setConversation] = useState([]);
   const [formValue, setFormValue] = useState('');
   const [language, setLanguage] = useState('Spanish');
+  const [user, setUser] = useState(null);
   const messagesRef = firestore.collection('messages'); // For storing messages in Firebase
 
   // Ollie sends first message
   useEffect(() => {
     getUser();
-    callOllie({prompt: data.state.prompt, conversation: conversation});
   }, []);
 
   // Called whenever conversation changes
   useEffect(() => {
-    if (conversation && conversation.length && conversation[conversation.length - 1].humanOrBot === 0) {
+    if (conversation && ((conversation.length && conversation[conversation.length - 1].humanOrBot === 0)
+      || (!conversation.length))) {
       callOllie({prompt: data.state.prompt, conversation: conversation});
     }
   }, [conversation]);
 
+  useImperativeHandle(ref, () => ({
+    save() {
+      saveChat();
+    }
+  }));
+
   const getUser = async () => {
-    const user = getUserDoc(auth.user.uid);
+    const user = await getUserDoc(auth.user.uid);
     setLanguage(user.language);
-  }
+    setUser(user);
+  };
 
   const saveChat = () => {
-    console.log("Save Chat Called");
-    console.log(conversation);
     for (var i = 0; i < conversation.length; i++) {
       const msg = conversation[i];
 
@@ -54,6 +58,7 @@ function ChatRoom() {
           text: msg.text,
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           humanOrBot: 1,
+          uid: user.uid,
           sessionId: uuid
         });
       } else { // human
@@ -62,12 +67,13 @@ function ChatRoom() {
           diff: msg.diff,
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           humanOrBot: 0,
+          uid: user.uid,
           sessionId: uuid
         });
       }
     }
-    setConversation([{humanOrBot: 1, text: ''}]);
-  }
+    setConversation([]);
+  };
 
   const sendMessage = async (e) => {
     e.preventDefault();
@@ -77,16 +83,15 @@ function ChatRoom() {
 
     // Translation
     [translation, diff] = await findForeignWords(formValue);
-
     // Fix Grammar
     const matches = await grammarCheck({ text: translation });
-    if (matches && matches.data.length > 0) {
+    if (matches && matches.data.length > 0 && matches.replacements) {
       [translation, diff] = await fixGrammar(translation, diff, matches);
     }
 
     // Store output
     await storeUserMessage(translation, diff);
-  }
+  };
 
   const findForeignWords = async (text) => {
     const translation = await translate({ text: text, language: language });
@@ -94,8 +99,13 @@ function ChatRoom() {
     d = d.map(part => {
       return {value: part.value, change: part.added ? 1 : part.removed ? -1 : 0};
     });
+
+    // Remove addition of period by GPT-3
+    if (d[d.length-1].change === 1 && (d[d.length-1].value === '.')) {
+      d.pop();
+    }
     return [translation.data, d];
-  }
+  };
 
   const fixGrammar = (text, diff, matches) => {
     var correctText = '';
@@ -130,7 +140,7 @@ function ChatRoom() {
     }).join(' ');
 
     return [correctText, new_diff];
-  }
+  };
 
   const storeUserMessage = (correctInput, diff) => {
     setConversation(conversation => [...conversation, {
@@ -138,7 +148,7 @@ function ChatRoom() {
       diff: diff,
       humanOrBot: 0 // human
     }]);
-  }
+  };
 
   const transformConvo = (conversation) => {
     var conversation_index = conversation.length >= 6 ? conversation.length - 6 : 0;
@@ -146,34 +156,37 @@ function ChatRoom() {
     var output = [];
 
     for (var i = 0; i < conversation_last6.length; i++) {
-      if (conversation_last6[i].humanOrBot) {
-        output.push('Ollie: ' + conversation_last6[i].text);
+      const text = conversation_last6[i].text;
+      if (conversation_last6[i].humanOrBot && text !== 'Sorry, could you repeat?') {
+        output.push('Ollie: ' + text);
       } else {
-        output.push('User: ' + conversation_last6[i].text)
+        output.push('User: ' + text);
       }
     }
     output.push('Ollie:');
     return output;
-  }
+  };
 
   const callOllie = (userInput) => {
     gpt3Chat({ prompt: userInput.prompt, conversation: transformConvo(userInput.conversation) })
       .then((result) => {
-        const response = result.data.text;
-        // if (result.data.text == "") { result.data.text = "Yikes, I was daydreaming! Could you repeat?"}
+        var response = result.data.text;
+        if (!response || response === '') {
+          response = 'Sorry, could you repeat?';
+        }
         setConversation(conversation => [...conversation, {
           text: response,
           humanOrBot: 1
         }]);
       })
       .catch((error) => {
-        console.log("Unable to call Ollie. " + error);
+        console.log('Unable to call Ollie. ' + error);
       });
-  }
+  };
 
   const scrollToBottom = () => {
     dummy.current.scrollIntoView({behavior: 'smooth'});
-  }
+  };
 
   useEffect(scrollToBottom, [conversation]);
 
@@ -187,12 +200,11 @@ function ChatRoom() {
         <input value={formValue} placeholder='Message Ollie...' onChange={(e) => setFormValue(e.target.value)} />
         <button type="submit"><IoSend className='icon'/></button>
       </form>
-      <div>
-        <button className='SaveButton' onClick={() => saveChat()}><IoCloudUpload className='icon' /></button>
-      </div>
     </div>
-  )
+  );
 }
+
+ChatRoom = forwardRef(ChatRoom); // eslint-disable-line
 
 function ChatMessage(props) {
   const {text, diff, humanOrBot} = props.message;
@@ -219,14 +231,14 @@ function ChatMessage(props) {
       <div className={`message ${messageClass}`} dangerouslySetInnerHTML={{__html: '<p>' + incorrectHTML + '</br>'
        + correctHTML + '</p>'}}>
       </div>
-    )
+    );
   }
   else {
     return (
       <div className={`message ${messageClass}`}>
         <p>{text}</p>
       </div>
-    )
+    );
   }
 }
 

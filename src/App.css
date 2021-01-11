@@ -31,7 +31,6 @@ p {
   border-radius: 20px;
   position: relative;
   color: white;
-  /*text-align: left;*/
 }
 
 ul, li {
@@ -99,7 +98,6 @@ header button, header a {
 }
 
 .body-container {
-/*  max-height: 500px;*/
   margin: auto;
   margin-top: 10vh;
   position: absolute;
@@ -260,7 +258,6 @@ header button, header a {
   position: fixed;
   top: 15px;
   right: 5%;
-  /*font-size: 0.9rem;*/
   cursor: pointer;
   background-color: var(--dark-primary);
   z-index: 11;
@@ -331,23 +328,21 @@ header button, header a {
   color: lightgreen;
 }
 
-/*main {
-  padding: 10px;
-  height: 80vh;
-  margin: 10vh 0 10vh;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column;
+.ProfilePage select {
+  color: var(--white);
+  background-color: var(--dark-primary);
 }
 
-main::-webkit-scrollbar {
-  width: 0.25rem;
+/************************** Different Screen Sizes **************************/
+
+@media only screen and (min-width: 600px) {
+  .scenario {
+    width: 30%;
+  }
 }
 
-main::-webkit-scrollbar-track {
-  background: #1e1e24;
+@media only screen and (min-width: 768px) {
+  .scenario {
+    width: 22%;
+  }
 }
-
-main::-webkit-scrollbar-thumb {
-  background: #6649b8;
-}*/

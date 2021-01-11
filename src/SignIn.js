@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FaUserAlt, FaLock, FaAt, FaTimes } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
 import { useAuth, generateUserDoc, getUserDoc } from './use-auth';
+import { FaLock, FaAt } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 import './App.css';
 
 function SignIn() {
@@ -21,7 +21,7 @@ function SignIn() {
       setError('Error signing in with email and password');
       console.error('Error signing in with email and password');
     }
-  }
+  };
 
   const signInWithGoogleHandler = async () => {
     try {
@@ -35,7 +35,7 @@ function SignIn() {
       setError('Error signing in with Google');
       console.error('Error signing in with Google');
     }
-  }
+  };
 
   const onChangeHandler = (event) => {
     const {name, value} = event.currentTarget;
@@ -44,7 +44,7 @@ function SignIn() {
     } else if (name === 'userPassword') {
       setPassword(value);
     }
-  }
+  };
 
   return (
     <div>
@@ -80,7 +80,7 @@ function SignIn() {
         <button className='google' onClick={() => signInWithGoogleHandler()}><FcGoogle /> Sign in with Google</button>
       </div>
     </div>
-  )
+  );
 }
 
 export default SignIn;

@@ -22,5 +22,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# link
+.eslintrc.js
+.eslintcache
+
 # firebase
 src/firebase-config.js

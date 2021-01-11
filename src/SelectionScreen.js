@@ -7,11 +7,11 @@ import introduction from './assets/introduction.jpg';
 import restaurant from './assets/restaurant.jpg';
 import shopping from './assets/shopping.jpg';
 import travel from './assets/travel.jpg';
-import weekend from './assets/weekend.jpg';
+import weekend from './assets/weekend2.jpg';
 
 
 function SelectionScreen() {
-  const prompt_start = 'This is a chat between Ollie and User. '
+  const prompt_start = 'This is a chat between Ollie and User. ';
   const scenarios = [
     { type: 'Introduction', img: introduction, prompt: prompt_start + 'Ollie is an English chatbot engaging in a friendly conversation to get to know each other and answers in language a first grader would understand.' },
     { type: 'At the Restaurant', img: restaurant, prompt: prompt_start + 'Ollie is an English chatbot sitting with a friend at the restaurant. Ollie decides what to eat and helps order food.' },
@@ -22,7 +22,7 @@ function SelectionScreen() {
     { type: 'Business Meeting', img: business, prompt: prompt_start + 'Ollie is an English chatbot who is having a business meeting with the participant and asking questions about how the business is doing.' },
     // { type: '', instructions: '' },
     // Images: @catalyststuff on freepik
-  ]
+  ];
 
   return (
     <div className='body-container'>
@@ -43,7 +43,7 @@ function SelectionScreen() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
 export default SelectionScreen;
